@@ -10,8 +10,8 @@ sudo apt isntall nodejs
 install npm
 sudo apt install npm
 
-install nativescript globaly
-npm install -g nativescript
+install nativescript globaly (try to use version compatible whit nativescript preview, actually is 6.5.0)
+npm install -g nativescript@6.5.0
 
 download android studio
 https://developer.android.com/studio/?gclid=Cj0KCQjwtZH7BRDzARIsAGjbK2YKrEC7OKfn0Dh_JXvwHEEGkEDBOMk5FcvRlOjyNLOoTFEoogcb-BEaAgp5EALw_wcB&gclsrc=aw.ds
