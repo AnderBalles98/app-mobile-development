@@ -12,6 +12,7 @@
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
   "scripts": {
+    "preinstall": "npm i -g nativescript@6.5.0",
     "lint": "tslint \"src/**/*.ts\""
   },
   "dependencies": {
