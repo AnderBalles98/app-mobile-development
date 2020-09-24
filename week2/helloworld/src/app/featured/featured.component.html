@@ -15,7 +15,11 @@
     <Label text="Featured"></Label>
 </ActionBar>
 
-<GridLayout class="page__content">
+<GridLayout class="page__content">  
     <Label class="page__content-icon fas" text="&#xf005;"></Label>
     <Label class="page__content-placeholder" text="<!-- Page content goes here -->"></Label>
+
+    <GridLayout class="bg-primary p-15 m-15" width="150" height="200" (longPress)="onLongPressGrid($event)">
+      <Image class="img-rounded" src="res://icon" stretch="none"></Image>
+    </GridLayout>
 </GridLayout>

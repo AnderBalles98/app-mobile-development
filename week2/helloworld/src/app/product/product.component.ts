@@ -43,22 +43,35 @@ export class ProductComponent implements OnInit {
     setNotice(currentNotice: string): void {
         const index = this.notices.indexOf(currentNotice);
         this.doLater(() => {
-            dialogs.prompt({
-                title: "Modificar",
-                message: "Modifica la noticia",
-                defaultText: currentNotice,
-                okButtonText: "OK",
+            dialogs.action({
+                title: "Administrar Noticia",
+                actions: ["Editar Noticia", "Eliminar Noticia"],
                 cancelButtonText: "Cancelar"
             }).then((res) => {
-                if (res.result) {
-                    const newNotice = res.text;
-                    this.notices.search()[index] = newNotice;
-                    const toastOption: Toast.ToastOptions = { text: "Modificación exitosa", duration: Toast.DURATION.SHORT };
+                if (res === "Editar Noticia") {
                     this.doLater(() => {
-                        Toast.show(toastOption)
+                        dialogs.prompt({
+                            title: "Modificar",
+                            message: "Modifica la noticia",
+                            defaultText: currentNotice,
+                            okButtonText: "OK",
+                            cancelButtonText: "Cancelar"
+                        }).then((res) => {
+                            if (res.result) {
+                                const newNotice = res.text;
+                                this.notices.search()[index] = newNotice;
+                                const toastOption: Toast.ToastOptions = { text: "Modificación exitosa", duration: Toast.DURATION.SHORT };
+                                this.doLater(() => {
+                                    Toast.show(toastOption)
+                                });
+                            }
+                        });
                     });
+                } else if (res === "Eliminar Noticia") {
+                    this.deleteNotice(currentNotice);
                 }
             });
+            
         });
     }
 
