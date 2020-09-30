@@ -1,0 +1,7 @@
+<FlexboxLayout flexDirection="row">
+    <TextField #element="ngModel" [(ngModel)]="textFieldValue" hint="Buscar..." required minlen="4" width="80%"></TextField>
+    <label *ngIf="element.hasError('required')" text="*"></label>
+    <Label *ngIf="!element.hasError('required') && element.hasError('minlen')" text="+4">
+    </Label>
+</FlexboxLayout>
+<Button text="Buscar" (tap)="onButtonTap(element)"></Button>
