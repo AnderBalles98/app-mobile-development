@@ -1,29 +1,34 @@
 import { Injectable } from "@angular/core";
+import { getJSON, request } from "tns-core-modules/http";
+import { HttpResponse } from "@nativescript/core";
 
 @Injectable()
 export class NewsService {
-    private notices: Array<string> =[];
+    private apiUrl: string = "https://5b9d1269fbfb.ngrok.io";
+    private headersJSON = {
+        "content-type": "application/json"
+    };
 
-    add(notice: string):void {
-        this.notices.push(notice);
+    add(notice: string): Promise<HttpResponse> {
+        return request({
+            url: this.apiUrl + "/noticias/add",
+            method: "post",
+            headers: this.headersJSON,
+            content: JSON.stringify({
+                notice
+            })
+        });
     }
 
-    search(): Array<string> {
-        return this.notices;
+    search(value: string): Promise<unknown> {
+        return getJSON(this.apiUrl + "/noticias?q=" + value);
     }
 
-    indexOf(element: string): number {
-        for (var i = 0; i < this.notices.length; i++) {
-            if (element === this.notices[i]) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    delete(element: string) {
-        const index = this.indexOf(element);
-        this.notices.splice(index, 1);
+    delete(element: string): Promise<HttpResponse> {
+        return request({
+            url: this.apiUrl + "/noticias/delete/" + element,
+            method: "post"
+        });
     }
 
 }
