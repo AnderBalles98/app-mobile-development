@@ -1,8 +1,8 @@
-import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
-import {RadSideDrawer} from "nativescript-ui-sidedrawer";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import {RouterExtensions} from "nativescript-angular/router";
-import {NewsService} from "../domain/news.service";
+import { RouterExtensions } from "nativescript-angular/router";
+import { NewsService } from "../domain/news.service";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as Toast from "nativescript-toasts";
 
