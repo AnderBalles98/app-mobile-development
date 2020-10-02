@@ -8,7 +8,7 @@ const sqlite = require("nativescript-sqlite");
 export class NewsService {
 
     favorites: Array<string>;
-    private apiUrl: string = "https://fd0ba59d5864.ngrok.io";
+    private apiUrl: string = "https://355d0db9d825.ngrok.io";
     private headersJSON = {
         "content-type": "application/json"
     };
