@@ -3,5 +3,8 @@
     <Image src="res://icon" class="thumb img-circle"></Image>
     <Label [text]="this.notice" class="list-group-item-heading" verticalAlignment="center"
         style="width:60%" (tap)="onNavItemTap('/home')"></Label>
+    <Label *ngIf="isFavorite" text="&#xf005;" class="fa-start fas" (tap)="setIsFavorite()"></Label>
+    <Label *ngIf="!isFavorite" text="&#xf005;" class="fa-start far" (tap)="setIsFavorite()"></Label>
     <Label text="&#xf044;" class="nt-icon fas" (tap)="setNotice(this.notice)"></Label>
+
 </FlexboxLayout>

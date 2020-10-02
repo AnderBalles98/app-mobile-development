@@ -13,9 +13,9 @@ import * as Toast from "nativescript-toasts";
 export class ProductComponent implements OnInit {
 
     @Input() notice: string;
-    private text: string;
+    @Input() isFavorite: boolean = false;
     @Output() deleteNoticeEmitter: EventEmitter<string> = new EventEmitter();
-
+    private text: string;
 
     constructor(private routerExtensions: RouterExtensions, private notices: NewsService) {
         // Use the component constructor to inject providers.
@@ -33,6 +33,16 @@ export class ProductComponent implements OnInit {
         this.deleteNoticeEmitter.emit(notice);
     }
 
+    setIsFavorite(): void {
+        if (this.isFavorite) {
+            this.notices.removeToFavorites(this.notice);
+        } else {
+            this.notices.addToFavorites(this.notice);
+        }
+
+        this.isFavorite = !this.isFavorite;
+
+    }
 
     setNotice(currentNotice: string): void {
         this.doLater(() => {
@@ -57,7 +67,7 @@ export class ProductComponent implements OnInit {
                                     duration: Toast.DURATION.SHORT
                                 };
                                 this.doLater(() => {
-                                    Toast.show(toastOption)
+                                    Toast.show(toastOption);
                                 });
                             }
                         });

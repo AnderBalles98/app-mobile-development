@@ -15,11 +15,18 @@ export class SearchComponent implements OnInit {
 
     notices: NewsService;
     noticesToShow: Array<string>;
+    favorites: Array<string>;
     @ViewChild("stackLayout", null) layout: ElementRef;
+
 
     constructor(notices: NewsService) {
         // Use the component constructor to inject providers.
         this.notices = notices;
+        this.notices.getFavorites((errr, rows) => {
+             this.favorites = rows.map((row) => {
+                return row[0];
+            });
+        });
     }
 
     ngOnInit(): void {
@@ -53,7 +60,6 @@ export class SearchComponent implements OnInit {
             });
         });
     }
-
 
     onItemTap(x): void {
         console.dir(x);

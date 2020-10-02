@@ -22,7 +22,7 @@
     <ListView class="list-group" [items]="this.noticesToShow" (itemTap)="onItemTap($event)"
               style="height:1250px">
         <ng-template let-notice="item">
-            <ns-product [notice]="notice" (deleteNoticeEmitter)="deleteNotice($event)" ></ns-product>
+            <ns-product [notice]="notice" [isFavorite]="favorites.indexOf(notice) > -1" (deleteNoticeEmitter)="deleteNotice($event)" ></ns-product>
         </ng-template>
     </ListView>
 </StackLayout>
