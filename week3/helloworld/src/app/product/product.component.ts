@@ -5,6 +5,9 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { NewsService } from "../domain/news.service";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as Toast from "nativescript-toasts";
+import {Store} from "@ngrx/store";
+import {AppState} from "~/app/app.module";
+import {AddToReadNowAction, Noticia, SugerirNoticiaAction} from "~/app/domain/new-state.model";
 
 @Component({
     selector: "ns-product",
@@ -17,7 +20,7 @@ export class ProductComponent implements OnInit {
     @Output() deleteNoticeEmitter: EventEmitter<string> = new EventEmitter();
     private text: string;
 
-    constructor(private routerExtensions: RouterExtensions, private notices: NewsService) {
+    constructor(private routerExtensions: RouterExtensions, private notices: NewsService, private store: Store<AppState>) {
         // Use the component constructor to inject providers.
     }
 
@@ -42,6 +45,18 @@ export class ProductComponent implements OnInit {
 
         this.isFavorite = !this.isFavorite;
 
+    }
+
+    addToReadNow(): void {
+        this.store.dispatch(new AddToReadNowAction(new Noticia(this.notice)));
+        Toast.show({
+            text: "Añadido a Leer Ahora En Home",
+            duration: Toast.DURATION.SHORT
+        });
+    }
+
+    setLikeSugerida(): void {
+        this.store.dispatch(new SugerirNoticiaAction(new Noticia(this.notice)));
     }
 
     setNotice(currentNotice: string): void {
@@ -82,14 +97,6 @@ export class ProductComponent implements OnInit {
 
     onItemTap(x): void {
         console.dir(x);
-    }
-
-    onNavItemTap(navItemRoute: string): void {
-        this.routerExtensions.navigate([navItemRoute], {
-            transition: {
-                name: "fade"
-            }
-        });
     }
 
     onDrawerButtonTap(): void {

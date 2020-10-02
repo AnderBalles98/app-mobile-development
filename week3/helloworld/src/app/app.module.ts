@@ -16,6 +16,24 @@ import { SearchFormComponent } from "./search-form/search-form.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { StoreComponent } from "./store/store.component";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import {initilizeNoticiasState, NoticiasEffects, NoticiasState, reducersNoticias} from "~/app/domain/new-state.model";
+import {ActionReducerMap} from "@ngrx/store";
+import { StoreModule as NgRxStoreModule } from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
+
+
+// GLOBAL STATES
+export interface AppState {
+    noticias: NoticiasState; // ADD NoticiasState TO GLOBAL STATES
+}
+
+const reducers: ActionReducerMap<AppState> = {
+    noticias: reducersNoticias // DEFINE REDUCER OF NoticiasState IN GLOBAL STATES
+};
+
+const reducersInitialState = {
+    noticias: initilizeNoticiasState() // DEFINE Initializer OF NoticiasState IN GLOBAL STATES
+}
 
 @NgModule({
     bootstrap: [
@@ -25,7 +43,11 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
         AppRoutingModule,
         NativeScriptModule,
         NativeScriptUISideDrawerModule,
-        NativeScriptFormsModule
+        NativeScriptFormsModule,
+        NgRxStoreModule.forRoot(reducers, {initialState: reducersInitialState, runtimeChecks: {
+            strictActionImmutability: false, strictStateImmutability: false
+            }}), // INTEGRATION OF GLOBAL STATE
+        EffectsModule.forRoot([NoticiasEffects]) // ITEGRATION OF EFFECTS IN GLOBAL STATE
     ],
     providers: [
         NewsService

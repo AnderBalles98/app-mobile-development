@@ -6,6 +6,9 @@ import {View, Color} from "tns-core-modules/ui/page";
 import * as Toast from "nativescript-toasts";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import Instance = WebAssembly.Instance;
+import {AppState} from "~/app/app.module";
+import {Store} from "@ngrx/store";
+import {Noticia} from "~/app/domain/new-state.model";
 
 @Component({
     selector: "Search",
@@ -19,7 +22,7 @@ export class SearchComponent implements OnInit {
     @ViewChild("stackLayout", null) layout: ElementRef;
 
 
-    constructor(notices: NewsService) {
+    constructor(notices: NewsService, private store: Store<AppState>) {
         // Use the component constructor to inject providers.
         this.notices = notices;
         this.notices.getFavorites((errr, rows) => {
@@ -32,6 +35,17 @@ export class SearchComponent implements OnInit {
     ngOnInit(): void {
         // Init your component properties here.
         this.getSearchFromChild("");
+
+        this.store.select((state) => {
+            return state.noticias.sugerida;
+        }).subscribe((sugerida: Noticia) => {
+            if (sugerida) {
+                Toast.show({
+                   text: "Sugerimos leer: " + sugerida.titulo,
+                    duration: Toast.DURATION.SHORT
+                });
+            }
+        });
     }
 
     doLater(fn) {

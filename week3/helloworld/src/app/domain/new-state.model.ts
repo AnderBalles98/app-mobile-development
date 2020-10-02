@@ -15,12 +15,14 @@ export class Noticia {
 export interface NoticiasState {
     items: Noticia[];
     sugerida: Noticia;
+    readNow: Noticia[];
 }
 
 export function initilizeNoticiasState () {
     return {
         items: [],
-        sugerida: null
+        sugerida: null,
+        readNow: []
     }
 }
 
@@ -29,7 +31,8 @@ export function initilizeNoticiasState () {
 export enum NoticiasActionTypes {
     INIT_MY_DATA = "[Noticias] Init My Data",
     NUEVA_NOTICIA = "[Noticias] Nueva",
-    SUGERIR_NOTICIA = "[Noticias] Sugerir"
+    SUGERIR_NOTICIA = "[Noticias] Sugerir",
+    ADD_TO_READ_NOW = "[Noticias] Add To Read Now"
 }
 
 export class InitMyDataAction implements Action {
@@ -46,6 +49,12 @@ export class NuevaNoticiaAction implements Action {
 
 export class SugerirNoticiaAction implements Action {
     type = NoticiasActionTypes.SUGERIR_NOTICIA;
+    constructor(public noticia: Noticia) {
+    }
+}
+
+export class AddToReadNowAction implements Action {
+    type = NoticiasActionTypes.ADD_TO_READ_NOW;
     constructor(public noticia: Noticia) {
     }
 }
@@ -73,6 +82,12 @@ export function reducersNoticias(state: NoticiasState, action: NoticiasActions):
               ...state,
               items: [...state.items, (action as NuevaNoticiaAction).noticia]
             };
+        }
+        case NoticiasActionTypes.ADD_TO_READ_NOW: {
+            return {
+                ...state,
+                readNow: [...state.readNow, (action as AddToReadNowAction).noticia]
+            }
         }
     }
 
